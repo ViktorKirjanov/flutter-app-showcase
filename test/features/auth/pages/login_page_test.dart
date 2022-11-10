@@ -33,15 +33,40 @@ Future<void> main() async {
   }
 
   await screenshotTest(
-    "login_page",
+    "login_page_init",
     setUp: () async {
       _initMvp();
     },
     pageBuilder: () => page,
   );
+  await screenshotTest(
+    "login_page_with_username_only",
+    setUp: () async {
+      _initMvp();
+      presenter.emit(
+        model.copyWith(
+          username: "test",
+        ),
+      );
+    },
+    pageBuilder: () => page,
+  );
 
   await screenshotTest(
-    "login_page",
+    "login_page_with_password_only",
+    setUp: () async {
+      _initMvp();
+      presenter.emit(
+        model.copyWith(
+          password: "test123",
+        ),
+      );
+    },
+    pageBuilder: () => page,
+  );
+
+  await screenshotTest(
+    "login_page_with_credentials",
     setUp: () async {
       _initMvp();
       presenter.emit(
