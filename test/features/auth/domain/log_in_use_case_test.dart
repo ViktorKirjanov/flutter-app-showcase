@@ -18,15 +18,43 @@ void main() {
       // GIVEN
 
       // WHEN
-      final result = await useCase.execute(username: "test", password: "test123");
+      final result = await useCase.execute(username: 'test', password: 'test123');
 
       // THEN
       expect(result.isSuccess, true);
     },
   );
 
-  test("getIt resolves successfully", () async {
+  test('getIt resolves successfully', () async {
     final useCase = getIt<LogInUseCase>();
     expect(useCase, isNotNull);
+  });
+
+  group('use case executes with failure', () {
+    test(
+      'wrong credentials',
+      () async {
+        // GIVEN
+
+        // WHEN
+        final result = await useCase.execute(username: 'test', password: 'test');
+
+        // THEN
+        expect(result.isFailure, true);
+      },
+    );
+
+    test(
+      'empty credentials',
+      () async {
+        // GIVEN
+
+        // WHEN
+        final result = await useCase.execute(username: '', password: '');
+
+        // THEN
+        expect(result.isFailure, true);
+      },
+    );
   });
 }
